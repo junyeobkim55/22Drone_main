@@ -14,34 +14,25 @@ USDER=1234.30;
 
 USD=KRW/USDER;
 
-%100dollar
-d1=mod(USD,100);
-D100=(USD-d1)/100;
-m1=USD-D100*100;
-%50dollar
-d2=mod(m1,50);
-D50=(m1-d2)/50;
-m2=m1-D50*50;
-%20dollar
-d3=mod(m2,20);
-D20=(m2-d3)/20;
-m3=m2-D20*20;
-%10dollar
-d4=mod(m3,10);
-D10=(m3-d4)/10;
-m4=m3-D10*10;
-%5dollar
-d5=mod(m4,5);
-D5=(m4-d5)/5;
-m5=m4-D5*5;
-%2dollar
-d6=mod(m5,2);
-D2=(m5-d6)/2;
-m6=m5-D2*2;
-%1dollar
-d7=mod(m6,1);
-D1=m6-d7;
-m7=m6-D1;
+% 화폐 종류 행렬은 화폐의 첫 문자로 하였다 %
+
+D=[100 50 20 10 5 2 1];
+nD=length(D);
+
+for k=1:nD
+    d(k)=mod(USD,D(k));
+    D_count(k)=(USD-d(k))/D(k);
+    USD=USD-D_count(k)*D(k);
+end
+
+D100=D_count(1);
+D50=D_count(2);
+D20=D_count(3);
+D10=D_count(4);
+D5=D_count(5);
+D2=D_count(6);
+D1=D_count(7);
+
 %USD Total
 USD_Total=D100+D50+D20+D10+D5+D2+D1;
 
