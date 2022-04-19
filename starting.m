@@ -72,6 +72,37 @@ JPYER=9.75;
 
 JPY=KRW/JPYER;
 
+% Matrix J : Unit of Yen
+% J_count : The number of Yen pieces
+% J10000 : The number of 10000 Yen pieces
+% J5000 : The number of 5000 Yen pieces
+% J2000 : The number of 2000 Yen pieces
+% J1000 : The number of 1000 Yen pieces
+
+J=[10000 5000 2000 1000];
+nJ=length(J);
+
+for k=1:nJ
+    y(k)=mod(JPY,J(k));
+    J_count(k)=(JPY-y(k))/J(k);
+    JPY=JPY-J_count(k)*J(k);
+end
+
+J10000=J_count(1);
+J5000=J_count(2);
+J2000=J_count(3);
+J1000=J_count(4);
+
+%JPY Total : Total number of Yen pieces
+JPY_Total=J10000+J5000+J2000+J1000;
+
+fprintf(['Total number of JPY Yen pieces is %f pieces.' ...
+    '\nThe number of 10000 Yen pieces is %f.' ...
+    '\nThe number of 5000 Yen pieces is %f.' ...
+    '\nThe number of 2000 Yen pieces is %f.' ...
+    '\nThe number of 1000 Yen pieces is %f.'],JPY_Total,J10000,J5000,J2000,J1000);
+
+
 %% CNY
 
 % CNY Yuan Unit
