@@ -62,6 +62,46 @@ fprintf(['Total number of USD dollars pieces is %f pieces.' ...
 EURER=1331.90;
 
 EUR=KRW/EURER;
+
+% Matrix E : Unit of Euro
+% E_count : The number of Euro pieces
+% E500 : The number of 500 Euro pieces
+% E200 : The number of 200 Euro pieces
+% E100 : The number of 100 Euro pieces
+% E50 : The number of 50 Euro pieces
+% E20 : The number of 20 Euro pieces
+% E10 : The number of 10 Euro pieces
+% E5 : The number of 5 Euro pieces
+
+E=[500 200 100 50 20 10 5];
+nE=length(E);
+
+for k=1:nE
+    e(k)=mod(EUR,E(k));
+    E_count(k)=(EUR-e(k))/E(k);
+    EUR=EUR-E_count(k)*E(k);
+end
+
+E500=E_count(1);
+E200=E_count(2);
+E100=E_count(3);
+E50=E_count(4);
+E20=E_count(5);
+E10=E_count(6);
+E5=E_count(7);
+
+%EUR Total : Total number of euro pieces
+EUR_Total=E500+E200+E100+E50+E20+E10+E5;
+
+fprintf(['Total number of EUR euros pieces is %f pieces.' ...
+    '\nThe number of 500 euro pieces is %f.' ...
+    '\nThe number of 200 euro pieces is %f.' ...
+    '\nThe number of 100 euro pieces is %f.' ...
+    '\nThe number of 50 euro pieces is %f.' ...
+    '\nThe number of 20 euro pieces is %f.' ...
+    '\nThe number of 10 euro pieces is %f.' ...
+    '\nThe number of 5 euro pieces is %f.'],EUR_Total,E500,E200,E100,E50,E20,E10,E5);
+
 %% JPY
 
 % JPY Yen Unit
