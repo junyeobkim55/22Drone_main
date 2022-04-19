@@ -14,7 +14,15 @@ USDER=1234.30;
 
 USD=KRW/USDER;
 
-% 화폐 종류 행렬은 화폐의 첫 문자로 하였다 %
+% Matrix D : Unit of Dollar
+% D_count : The number of dollar pieces
+% D100 : The number of 100 dollar pieces
+% D50 : The number of 50 dollar pieces
+% D20 : The number of 20 dollar pieces
+% D10 : The number of 10 dollar pieces
+% D5 : The number of 5 dollar pieces
+% D2 : The number of 2 dollar pieces
+% D1 : The number of 1 dollar pieces
 
 D=[100 50 20 10 5 2 1];
 nD=length(D);
@@ -33,7 +41,7 @@ D5=D_count(5);
 D2=D_count(6);
 D1=D_count(7);
 
-%USD Total
+%USD Total : Total number of dollar pieces
 USD_Total=D100+D50+D20+D10+D5+D2+D1;
 
 fprintf(['Total number of USD dollars pieces is %f pieces.' ...
