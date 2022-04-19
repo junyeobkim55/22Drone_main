@@ -72,12 +72,6 @@ JPYER=9.75;
 
 JPY=KRW/JPYER;
 
-% JPY_new를 새로 지정한 이유는 sym에서 정수만 사용가능하기 때문에 소수점을 
-% 제거하였다
-JPY_new=JPY-mod(JPY,1);
-
-
-
 % Matrix J : Unit of Yen
 % J_count : The number of Yen pieces
 % J10000 : The number of 10000 Yen pieces
@@ -89,9 +83,9 @@ J=[10000 5000 2000 1000];
 nJ=length(J);
 
 for k=1:nJ
-    [Q,R]=quorem(sym(JPY_new),sym(J(k)));
-    J_count(k)=Q;
-    JPY_new=R;
+    y(k)=mod(JPY,J(k));
+    J_count(k)=(JPY-y(k))/J(k);
+    JPY=JPY-J_count(k)*J(k);
 end
 
 J10000=J_count(1);
