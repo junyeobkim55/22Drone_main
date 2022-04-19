@@ -65,13 +65,13 @@ EUR=KRW/EURER;
 
 % Matrix E : Unit of Euro
 % E_count : The number of Euro pieces
-% E500 : The number of 100 Euro pieces
-% E200 : The number of 50 Euro pieces
-% E100 : The number of 20 Euro pieces
-% E50 : The number of 10 Euro pieces
-% E20 : The number of 5 Euro pieces
-% E10 : The number of 2 Euro pieces
-% E5 : The number of 1 Euro pieces
+% E500 : The number of 500 Euro pieces
+% E200 : The number of 200 Euro pieces
+% E100 : The number of 100 Euro pieces
+% E50 : The number of 50 Euro pieces
+% E20 : The number of 20 Euro pieces
+% E10 : The number of 10 Euro pieces
+% E5 : The number of 5 Euro pieces
 
 E=[500 200 100 50 20 10 5];
 nE=length(E);
@@ -101,6 +101,7 @@ fprintf(['Total number of EUR euros pieces is %f pieces.' ...
     '\nThe number of 20 euro pieces is %f.' ...
     '\nThe number of 10 euro pieces is %f.' ...
     '\nThe number of 5 euro pieces is %f.'],EUR_Total,E500,E200,E100,E50,E20,E10,E5);
+
 %% JPY
 
 % JPY Yen Unit
