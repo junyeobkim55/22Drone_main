@@ -93,7 +93,7 @@ E5=E_count(7);
 %EUR Total : Total number of euro pieces
 EUR_Total=E500+E200+E100+E50+E20+E10+E5;
 
-fprintf(['Total number of EUR euros pieces is %f pieces.' ...
+fprintf(['\nTotal number of EUR euros pieces is %f pieces.' ...
     '\nThe number of 500 euro pieces is %f.' ...
     '\nThe number of 200 euro pieces is %f.' ...
     '\nThe number of 100 euro pieces is %f.' ...
@@ -136,7 +136,7 @@ J1000=J_count(4);
 %JPY Total : Total number of Yen pieces
 JPY_Total=J10000+J5000+J2000+J1000;
 
-fprintf(['Total number of JPY Yen pieces is %f pieces.' ...
+fprintf(['\nTotal number of JPY Yen pieces is %f pieces.' ...
     '\nThe number of 10000 Yen pieces is %f.' ...
     '\nThe number of 5000 Yen pieces is %f.' ...
     '\nThe number of 2000 Yen pieces is %f.' ...
@@ -153,3 +153,42 @@ fprintf(['Total number of JPY Yen pieces is %f pieces.' ...
 CNYER=193.90;
 
 CNY=KRW/CNYER;
+
+% Matrix C : Unit of Yuan
+% C_count : The number of Yuan pieces
+% C100 : The number of 100 Yuan pieces
+% C50 : The number of 50 Yuan pieces
+% C20 : The number of 20 Yuan pieces
+% C10 : The number of 10 Yuan pieces
+% C5 : The number of 5 Yuan pieces
+% C2 : The number of 2 Yuan pieces
+% C1 : The number of 1 Yuan pieces
+
+C=[100 50 20 10 5 2 1];
+nC=length(C);
+
+for k=1:nC
+    c(k)=mod(CNY,C(k));
+    C_count(k)=(CNY-c(k))/C(k);
+    CNY=CNY-C_count(k)*C(k);
+end
+
+C100=C_count(1);
+C50=C_count(2);
+C20=C_count(3);
+C10=C_count(4);
+C5=C_count(5);
+C2=C_count(6);
+C1=C_count(7);
+
+%CNY Total : Total number of Yuan pieces
+CNY_Total=C100+C50+C20+C10+C5+C2+C1;
+
+fprintf(['\nTotal number of CNY Yuan pieces is %f pieces.' ...
+    '\nThe number of 100 Yuan pieces is %f.' ...
+    '\nThe number of 50 Yuan pieces is %f.' ...
+    '\nThe number of 20 Yuan pieces is %f.' ...
+    '\nThe number of 10 Yuan pieces is %f.' ...
+    '\nThe number of 5 Yuan pieces is %f.' ...
+    '\nThe number of 2 Yuan pieces is %f.' ...
+    '\nThe number of 1 Yuan pieces is %f.'],CNY_Total,C100,C50,C20,C10,C5,C2,C1);
