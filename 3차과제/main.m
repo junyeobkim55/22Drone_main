@@ -18,8 +18,6 @@ gray_img=mat2gray(detectgreen_new);
 
 canny_img=edge(gray_img,'canny');
 canny_img = bwareaopen(canny_img,500);
-imshow(canny_img);
-
 
 %% edge
 count_BW2(1) = sum(bwareafilt(canny_img,1),'all');
