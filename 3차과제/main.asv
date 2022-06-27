@@ -1,11 +1,9 @@
 clc
 clear
 
-img=imread(['문제6.png']);
-imshow(img);
+img=imread(['문제1.png']);
 hsv_img=rgb2hsv(img);
 
-s_lim = 0.3;
 s_lim_g = 0.3;
 v_lim = 0.96;
 
@@ -15,17 +13,15 @@ v=hsv_img(:,:,3);
 
 detect_green = ((0.25<h)&(h<0.4))&(s_lim_g < s)&(v_lim > v);
 detectgreen_new=bwareafilt(detect_green,1);
-subplot(2,2,1),subimage(img);
-subplot(2,2,2), subimage(detectgreen_new);
+
 gray_img=mat2gray(detectgreen_new);
 
 canny_img=edge(gray_img,'canny');
-subplot(2,2,3), subimage(canny_img);
-canny_img = bwareaopen(canny_img,700);
-A=bwareafilt(canny_img,1);
+canny_img = bwareaopen(canny_img,500);
+imshow(canny_img);
 
 
-%% edge 개수
+%% edge 검출
 count_BW2(1) = sum(bwareafilt(canny_img,1),'all');
 BW3(:,:,1) = bwareafilt(canny_img,1);
 for i = 2:5
@@ -42,6 +38,7 @@ for i = 2:5
         end
     end
 end
+%% 사각형 검출
 for z=1:i
 BW4(z)=sum(imfill(BW3(:,:,z),'holes'),'all');
 if BW4(z)>10000
@@ -54,29 +51,12 @@ end
 p=find((BW4==min(BW4)));
 canny_img=BW3(:,:,p);
 
-
-
-
-
-%%
-
-
-
-% 중심점 new
-% [i,j]=find(canny_img==1);
-% first=[max(j),min(i)];
-% second=[min(j),min(i)];
-% third=[min(j),max(i)];
-% fourth=[max(j),max(i)];
-% 
-% firstmid=(first+third)/2;
-% secondmid=(second+fourth)/2;
-% realcenter=(firstmid+secondmid)/2
+%% 원점지정
 
 s=regionprops(canny_img,'Centroid');
 centroids=cat(1,s.Centroid);
 
-% 중심점 newnew
+%% x좌표화
 [row,col]=size(canny_img);
 xmat=[];
 for k=1:row
@@ -91,6 +71,7 @@ for k=1:row
     end
 end
 
+%% y좌표화
 ymat=[];
 for m=1:row
     for n=1:col
@@ -108,6 +89,7 @@ xmat=xmat.*canny_img;
 
 ymat=-ymat.*canny_img;
 
+%% 꼭짓점 찾기
 
 first_result=xmat+ymat;
 [first_y,first_x]=find(first_result==max(max(first_result)));
@@ -132,11 +114,6 @@ final_fourth_y=mean(fourth_y);
 center_ft=[(final_first_x+final_third_x)/2,(final_first_y+final_third_y)/2];
 center_sf=[(final_second_x+final_fourth_x)/2,(final_second_y+final_fourth_y)/2];
 
-center=(center_sf+center_ft)/2
-imshow(canny_img);
-hold on
-% plot(center_ft(:,1),center_ft(:,2),'b*');
-% plot(center_sf(:,1),center_sf(:,2),'g*');
-% plot(centroids(1),centroids(2),'b*');
-plot(center(:,1),center(:,2),'r*');
-hold off
+center=(center_sf+center_ft)/2;
+
+
