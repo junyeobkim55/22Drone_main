@@ -63,5 +63,6 @@
 
 ![center classify flowchart](/image/centerclassify.png)
 
-> 장애물의 사진을 분류하는 flowchart (빨간색 점은 질량 중심)
+> * 장애물의 사진을 분류하는 flowchart (빨간색 점은 질량 중심)
+> * 지령은 장애물 통과 부분의 중심점을 의미
 
