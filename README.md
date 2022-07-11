@@ -89,4 +89,21 @@
  
   ![coordinate3](/image/coordinate3.jpg)
  
-  > 
+  > 1,3 사분면 꼭짓점의 중점과 2,4 사분면 꼭짓점의 중점을 구하고 구한 두 중점을 평균화하여 최종적으로 **지령**(초록색 점)을 생성한다.
+  
+  ![coordinate4](/image/coordinate4.jpg)
+  
+## 5. 각 단계별 과정
+
+
+
+
+
+
+
+
+
+
+
+
+
