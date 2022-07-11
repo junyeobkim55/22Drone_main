@@ -25,6 +25,7 @@
 ## 1. 사용 패키지
 
 * [MATLAB Support Package for Ryze Tello Drones](https://kr.mathworks.com/matlabcentral/fileexchange/74434-matlab-support-package-for-ryze-tello-drones?s_tid=srchtitle)
+* [
 
 ## 2. 파일 구조
 
@@ -53,7 +54,7 @@
   
   * 전략 : 다항식 회귀분석을 통해 거리를 계산하고 구한 거리를 통해 y축 오차를 보상한다.
   
-  > 1. 정확한 거리 측정을 위해 파란색 원을 출력하여 다양한 거리에서 촬영하였다. 거리에 따른 픽셀 수의 변화를 유리함수로 fitting 하였고
+  > 1. 정확한 거리 측정을 위해 파란색 원을 출력하여 다양한 거리에서 촬영하였다. 거리에 따른 픽셀 수의 변화를 1/(이차함수) 형태로 fitting 하였고
     이후 실제 장애물 원 크기에 맞추어 scaling 을 진행하였다.
    
   > 2. 드론의 카메라가 하단부를 향하고 있어 카메라 중심과 장애물의 중심점을 정렬하여도 부득이한 y축 오차가 발생한다.
@@ -65,4 +66,13 @@
 
 > * 장애물의 사진을 분류하는 flowchart (빨간색 점은 질량 중심)
 > * 지령은 장애물 통과 부분의 중심점을 의미
+
+***
+
+![regression_50 plot](/image/regression_50.png)
+
+> * 처음에는 [pixel] = a/(distance) + k 의 유리함수 형태로(a,k는 상수) 회귀분석을 진행하였으나 그래프의 기울기가 급격하여 가까운 1~2m의 가까운 거리에서 적절하지 않았다. 따라서 1/(ax^2+bx+c) 함수로 회귀분석을 진행하였다. 
+> * 1~3m 의 데이터 만을 사용하였다.
+
+## 4. 중심점 찾기 알고리즘
 
