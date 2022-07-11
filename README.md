@@ -80,5 +80,9 @@
   1. 이미지 좌표화
   > (예시로는 사각형 장애물을 사용) 통과부분의 edge를 추출하고 edge의 centroid를 직교좌표계의 원점으로 한다. 이를 통해 사각형의 각 꼭짓점이 각각의 사분면에 위치하게 할 수 있다.
   
-  ![coordinate](
+  ![coordinate](/image/coordinate.jpg)
+  
+  > 각 사분면에 따라 최댓값의 좌표를 갖는 지점을 꼭짓점으로 잡는다. 이 때 최댓값의 좌표가 여러 개가 나올 경우 평균화를 진행한다.
+  
+  ![coordinate2](/image/coordinate2.jpg)
  
