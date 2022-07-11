@@ -25,7 +25,7 @@
 ## 1. 사용 패키지
 
 * [MATLAB Support Package for Ryze Tello Drones](https://kr.mathworks.com/matlabcentral/fileexchange/74434-matlab-support-package-for-ryze-tello-drones?s_tid=srchtitle)
-* [
+* [MATLAB Image Processing Toolbox](https://kr.mathworks.com/products/image.html)
 
 ## 2. 파일 구조
 
@@ -76,3 +76,9 @@
 
 ## 4. 중심점 찾기 알고리즘
 
+ * 통과부분이 온전히 카메라 안에 들어온 후에 중심점을 찾는 알고리즘
+  1. 이미지 좌표화
+  > (예시로는 사각형 장애물을 사용) 통과부분의 edge를 추출하고 edge의 centroid를 직교좌표계의 원점으로 한다. 이를 통해 사각형의 각 꼭짓점이 각각의 사분면에 위치하게 할 수 있다.
+  
+  ![coordinate](
+ 
