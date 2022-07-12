@@ -78,7 +78,7 @@
 
 
 
-![y_compensate](/image/ycompensate.jpg)
+![y_compensate](/image/ycompensate2.jpg)
 
 > * 드론 카메라 방향으로 인해 생기는 부득이한 y축 에러를 각도 세타와 회귀분석으로 구한 거리를 통해 보상한다.
 
