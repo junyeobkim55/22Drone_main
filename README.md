@@ -44,7 +44,7 @@
   > * 통과 부분이 온전히 보이는 경우
     중심점 찾기 코드를 적용하여 드론의 카메라 중심점과 장애물의 중심점을 일치시킨다.
 
-### 2) 회귀분석을 통한 거리 계산 & 카메라 y축 보상
+### 2) 회귀분석을 통한 거리 계산 ,카메라 y축 보상
   
   * 전략 : 다항식 회귀분석을 통해 거리를 계산하고 구한 거리를 통해 y축 오차를 보상한다.
   
@@ -230,49 +230,92 @@ function [detectblue_new,canny_img] = imageprocess(cam)
   end
   ```
   
-  > [2-1](#1-장애물-중심점-탐색)에서 언급한대로 카메라에 찍히는 사진을 세 가지로 분류하였다.
+  > [2-1)](#1-장애물-중심점-탐색)에서 언급한대로 카메라에 찍히는 사진을 세 가지로 분류하였다.
   
-  >> * 열린 edge 한 개 : centroid_no
-  >> * 열린 edge 두 개 : centroid_half
-  >> * 닫힌 edge 존재  : centroid_full
- 
+  > * 열린 edge 한 개 : centroid_no
+  > * 열린 edge 두 개 : centroid_half
+  > * 닫힌 edge 존재  : centroid_full
+  
   ### 4) Positioning Control
-      
-    ```
-    % x-positioning control
+
+```
+% x-positioning control
+if (-0.1 <= distance_real_x)&&(distance_real_x <= 0.1)
+   
+elseif (0.1 < distance_real_x)&&(distance_real_x < 0.2)
+    moveleft(drone,'Distance',0.2,'Speed',0.7);
     
-    if (-0.1 <= distance_real_x)&&(distance_real_x <= 0.1)
-
-    elseif (0.1 < distance_real_x)&&(distance_real_x < 0.2)
-        moveleft(drone,'Distance',0.2,'Speed',0.7);
-
-    elseif (-0.2 < distance_real_x)&&(distance_real_x < -0.1)
-        moveright(drone,'Distance',0.2,'Speed',0.7);
-
-    elseif distance_real_x >= 0.2
-        moveleft(drone,'Distance',distance_real_x,'Speed',0.7);
-
-    elseif distance_real_x <= -0.2
-        moveright(drone,'Distance',abs(distance_real_x),'Speed',0.7);
-
-    end
+elseif (-0.2 < distance_real_x)&&(distance_real_x < -0.1)
+    moveright(drone,'Distance',0.2,'Speed',0.7);
+    
+elseif distance_real_x >= 0.2
+    moveleft(drone,'Distance',distance_real_x,'Speed',0.7);
+    
+elseif distance_real_x <= -0.2
+    moveright(drone,'Distance',abs(distance_real_x),'Speed',0.7);
+    
+end
 
     % y-positioning control
+if (-0.1 <= distance_real_y)&&(distance_real_y<= 0.1)
     
-    if (-0.1 <= distance_real_y)&&(distance_real_y<= 0.1)
-
-    elseif (0.1 < distance_real_y)&&(distance_real_y< 0.2)
-        movedown(drone,'Distance',0.2,'Speed',0.7);
-
-    elseif (-0.2 < distance_real_y)&&(distance_real_y < -0.1)
-        moveup(drone,'Distance',0.2,'Speed',0.7);
-
-    elseif distance_real_y >= 0.2
-        movedown(drone,'Distance',distance_real_y,'Speed',0.7);
-
-    elseif distance_real_y <= -0.2
-        moveup(drone,'Distance',abs(distance_real_y),'Speed',0.7);
-    ```
+elseif (0.1 < distance_real_y)&&(distance_real_y< 0.2)
+    movedown(drone,'Distance',0.2,'Speed',0.7);
     
-    > 중심점이 인식되면 픽셀 거리를 바탕으로 카메라 중심점과 과녁 중심점과의 실제 x축 거리와 y축 거리가 계산된다.
+elseif (-0.2 < distance_real_y)&&(distance_real_y < -0.1)
+    moveup(drone,'Distance',0.2,'Speed',0.7);
+ 
+elseif distance_real_y >= 0.2
+    movedown(drone,'Distance',distance_real_y,'Speed',0.7);
+    
+elseif distance_real_y <= -0.2
+    moveup(drone,'Distance',abs(distance_real_y),'Speed',0.7);
+```
+> 중심점이 인식되면 픽셀 거리를 바탕으로 카메라 중심과 과녁의 중심 사이의 실제 x축 거리와 y축 거리가 인식된다. 궁극적으로는 카메라 중심과 과녁의 중심의 차이가 10cm 이내를 목표로 한다.
 
+```
+function [distance,y_error] = distance_and_compensate(BW4,level)
+
+    pixel_for_distance = min(BW4);
+
+    % distance_dimension [m]
+    if level==1
+        distance = max(roots([2.41476873328480e-06 -2.95206178231860e-07 (2.48545546188223e-07)-(1/pixel_for_distance)]))-0.15;
+        distance_for_y = max(roots([2.41476873328480e-06 -2.95206178231860e-07 (2.48545546188223e-07)-(1/pixel_for_distance)]))-0.1;
+    elseif level==2
+        distance = max(roots([4.81282626426305e-06 -5.88369407133181e-07 (4.95371053994430e-07)-(1/pixel_for_distance)]))-0.12;
+        distance_for_y = max(roots([4.81282626426305e-06 -5.88369407133181e-07 (4.95371053994430e-07)-(1/pixel_for_distance)]))+0.05;
+    elseif level==3
+        distance = max(roots([5.87658118932178e-06 -7.18413755344577e-07 (6.04860441203445e-07)-(1/pixel_for_distance)]))-0.1;
+        distance_for_y = max(roots([4.81282626426305e-06 -5.88369407133181e-07 (4.95371053994430e-07)-(1/pixel_for_distance)]));
+    end
+
+    % camera_compensate
+    theta = atan(31.5/155);
+    y_error = tan(theta)*distance_for_y;
+end
+```
+
+> [2-2)](#2-회귀분석을-통한-거리-계산-카메라-y축-보상) 에서 언급한대로 y축 오차를 보상해주는 함수 이다. 전진거리를 그대로 y축 보상 회귀분석에 사용하지 않고 Data Tuning을 진행하여 적합한 offset값을 찾아냈다.
+
+### 5) Center Rearrange
+
+```
+if level==1
+    distance_stop=1.9;
+elseif level==2
+    distance_stop=1.5;
+else
+    distance_stop=1.45;
+end
+
+if distance > distance_stop
+    moveforward(drone,'Distance',(distance-distance_stop+0.2),'Speed',0.4);
+
+while 1 ...
+
+```
+
+> 드론의 전진을 위해 moveforward함수를 사용하는데 정확히 직진하지 못하는 경우가 종종 발생하였다. 이를 보완하기 위해 과녁과 드론의 거리가 일정 이상이면 적당한 거리를 먼저 직진하고 중심점을 다시 정렬하는 방안을 채택하였다.
+
+***
