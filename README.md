@@ -157,10 +157,10 @@ function [detectblue_new,canny_img] = imageprocess(cam)
 
   > 이진화를 완료한 이미지에서 어떤 픽셀의 값이 1이고 그의 상,하,좌,우 픽셀들의 값이 모두 1일때 가운데에 위치한 픽셀의 값을 0으로 치환하였다.
 
-  ### 2) Edge Classify
+  ### 2) Edge Detection
   
   ```
-  function [BW3,BW4,B] = edge_classify(canny_img)
+  function [BW3,BW4,B] = edge_detection(canny_img)
 
      count_BW2(1) = sum(bwareafilt(canny_img,1),'all');
      BW3(:,:,1) = bwareafilt(canny_img,1);
@@ -207,7 +207,35 @@ function [detectblue_new,canny_img] = imageprocess(cam)
 
 > imfill함수를 사용하여 닫힌 edge만을 추출하였다.
 
+  ### 3) Case Classification
+  
+  ```
+  % centroids_no
+  if (length(BW4)==1&&min(BW4)==691200)
+    s_no=regionprops(detectblue_new,'Centroid');
+    centroids_no=cat(1,s_no.Centroid);
 
+  % centroids_half
+  elseif (length(BW4)>=2&&min(BW4)==691200)
+    s_half=regionprops(BW3(:,:,B),'Centroid');
+    centroids_half=cat(1,s_half.Centroid);
+
+  % centroids_full
+  else
+    p=find((BW4==min(BW4)));
+    canny_img=BW3(:,:,p);
+    s_full=regionprops(canny_img,'Centroid');
+    centroids_full=cat(1,s_full.Centroid);
+  end
+  ```
+  
+  > 2-1)에서 언급한대로 카메라에 찍히는 사진을 세 가지로 분류하였다.
+  
+  > 열린 edge 한 개 : centroid_no
+  
+  > 열린 edge 두 개 : centroid_half
+
+  > 닫힌 edge 존재  : centroid_full
 
 
 
