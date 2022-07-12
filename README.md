@@ -231,11 +231,9 @@ function [detectblue_new,canny_img] = imageprocess(cam)
   
   > 2-1)에서 언급한대로 카메라에 찍히는 사진을 세 가지로 분류하였다.
   
-  > 열린 edge 한 개 : centroid_no
-  
-  > 열린 edge 두 개 : centroid_half
-
-  > 닫힌 edge 존재  : centroid_full
-
+  >> * 열린 edge 한 개 : centroid_no
+  >> * 열린 edge 두 개 : centroid_half
+  >> * 닫힌 edge 존재  : centroid_full
+ 
 
 
