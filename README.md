@@ -67,7 +67,7 @@
 
 
 
-> * 처음에는 [pixel] = a/(distance) + k 의 유리함수 형태로(a,k는 상수) 회귀분석을 진행하였으나 그래프의 기울기가 급격하여 가까운 1~2m의 가까운 거리에서 적절하지 않았다. 따라서 1/(ax^2+bx+c) 함수로 회귀분석을 진행하였다. 
+> * 처음에는 [pixel] = a/(distance^2) + k 의 유리함수 형태로(a,k는 상수) 회귀분석을 진행하였으나 그래프의 기울기가 급격하여 가까운 1~2m의 가까운 거리에서 적절하지 않았다. 따라서 1/(ax^2+bx+c) 함수로 회귀분석을 진행하였다. 
 > * 1~3m 의 데이터 만을 사용하였다.
 
 
@@ -230,11 +230,49 @@ function [detectblue_new,canny_img] = imageprocess(cam)
   end
   ```
   
-  > 2-1)에서 언급한대로 카메라에 찍히는 사진을 세 가지로 분류하였다.
+  > [2-1](#1-장애물-중심점-탐색)에서 언급한대로 카메라에 찍히는 사진을 세 가지로 분류하였다.
   
   >> * 열린 edge 한 개 : centroid_no
   >> * 열린 edge 두 개 : centroid_half
   >> * 닫힌 edge 존재  : centroid_full
  
+  ### 4) Positioning Control
+      
+    ```
+    % x-positioning control
+    
+    if (-0.1 <= distance_real_x)&&(distance_real_x <= 0.1)
 
+    elseif (0.1 < distance_real_x)&&(distance_real_x < 0.2)
+        moveleft(drone,'Distance',0.2,'Speed',0.7);
+
+    elseif (-0.2 < distance_real_x)&&(distance_real_x < -0.1)
+        moveright(drone,'Distance',0.2,'Speed',0.7);
+
+    elseif distance_real_x >= 0.2
+        moveleft(drone,'Distance',distance_real_x,'Speed',0.7);
+
+    elseif distance_real_x <= -0.2
+        moveright(drone,'Distance',abs(distance_real_x),'Speed',0.7);
+
+    end
+
+    % y-positioning control
+    
+    if (-0.1 <= distance_real_y)&&(distance_real_y<= 0.1)
+
+    elseif (0.1 < distance_real_y)&&(distance_real_y< 0.2)
+        movedown(drone,'Distance',0.2,'Speed',0.7);
+
+    elseif (-0.2 < distance_real_y)&&(distance_real_y < -0.1)
+        moveup(drone,'Distance',0.2,'Speed',0.7);
+
+    elseif distance_real_y >= 0.2
+        movedown(drone,'Distance',distance_real_y,'Speed',0.7);
+
+    elseif distance_real_y <= -0.2
+        moveup(drone,'Distance',abs(distance_real_y),'Speed',0.7);
+    ```
+    
+    > 중심점이 인식되면 픽셀 거리를 바탕으로 카메라 중심점과 과녁 중심점과의 실제 x축 거리와 y축 거리가 계산된다.
 
