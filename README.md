@@ -181,7 +181,7 @@ function [detectblue_new,canny_img] = imageprocess(cam)
   > 위에서 검출한 edge를 분류하는 작업이다. Edge를 bwareafilt함수를 사용하여 크기별로 분류한 뒤 BW3행렬에 분리된 각각의 edge를 3차원으로 저장한다. 
 
 ```
-     for k = 1:i
+   for k = 1:i
        [xpoint,ypoint]=find(BW3(:,:,k)==1);
        if or((abs(max(xpoint)-min(xpoint)) < 30),(abs(max(ypoint)-min(ypoint)) < 30))
            BW3(:,:,k)=ones;
@@ -190,17 +190,17 @@ function [detectblue_new,canny_img] = imageprocess(cam)
        end
        A(k)=sum(BW3(:,:,k),'all');
        B=find(A==min(A));
-    end
+   end
 
-    for z=1:i
+   for z=1:i
        BW4(z)=sum(imfill(BW3(:,:,z),'holes'),'all');
        if  BW4(z)>10000
            BW4(z)=BW4(z);
        else
            BW4(z)=691200;
-    end
-    end
-    end
+   end
+   end
+   end
 ```
 
 > edge들을 각각 추출하여 분류한 뒤, 장애물의 통과 부분의 edge만을 추출하는 코드이다.
