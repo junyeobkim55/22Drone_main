@@ -806,7 +806,7 @@ moveforward(drone,'Distance',desired_distance,'Speed',1);
 if level==1
     turn(drone,pi/2);
     
-    moveforward(drone,'Distance',1.2,'Speed',1);
+    moveforward(drone,'Distance',1.4,'Speed',1);
     
 
     [drone_height,time]=readHeight(drone);
@@ -992,13 +992,13 @@ pixel_for_distance = min(BW4);
 
 % distance_dimension [m]
 if level==1
-    distance = max(roots([2.41476873328480e-06 -2.95206178231860e-07 (2.48545546188223e-07)-(1/pixel_for_distance)]))-0.15;
-    distance_for_y = max(roots([2.41476873328480e-06 -2.95206178231860e-07 (2.48545546188223e-07)-(1/pixel_for_distance)]))-0.1;
+    distance = max(roots([2.41476873328480e-06 -2.95206178231860e-07 (2.48545546188223e-07)-(1/pixel_for_distance)]))+0.15;
+    distance_for_y = max(roots([2.41476873328480e-06 -2.95206178231860e-07 (2.48545546188223e-07)-(1/pixel_for_distance)]))+0.05;
 elseif level==2
-    distance = max(roots([4.81282626426305e-06 -5.88369407133181e-07 (4.95371053994430e-07)-(1/pixel_for_distance)]))-0.12;
+    distance = max(roots([4.81282626426305e-06 -5.88369407133181e-07 (4.95371053994430e-07)-(1/pixel_for_distance)]));
     distance_for_y = max(roots([4.81282626426305e-06 -5.88369407133181e-07 (4.95371053994430e-07)-(1/pixel_for_distance)]))+0.05;
 elseif level==3
-    distance = max(roots([5.87658118932178e-06 -7.18413755344577e-07 (6.04860441203445e-07)-(1/pixel_for_distance)]))-0.1;
+    distance = max(roots([5.87658118932178e-06 -7.18413755344577e-07 (6.04860441203445e-07)-(1/pixel_for_distance)]))+0.05;
     distance_for_y = max(roots([4.81282626426305e-06 -5.88369407133181e-07 (4.95371053994430e-07)-(1/pixel_for_distance)]));
 end
 
